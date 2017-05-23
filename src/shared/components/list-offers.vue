@@ -41,7 +41,7 @@ export default {
     },
     computed: {
         getGroupBy: function () {
-            return this.groupBy(this.loanRequest, this.referrals, this.offers, this.groupListFunctions);
+            return this.groupByAndCreateFilters(this.loanRequest, this.referrals, this.offers, this.groupListFunctions);
         }
     },
     mixins: [ExpressOffersGroupby, ExpressOffersLoanTerms]
