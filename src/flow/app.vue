@@ -1,80 +1,93 @@
 <template>
-<div>
-    <div class="progress-bar" v-if="display!=3">
-        <div class="container">
-            <div class="fill" :style="{width: getcompleted + '%'}"></div>
+    <div id="quiz">
+        <div class="progress-bar" v-if="display!=3">
+            <div class="container">
+                <div class="fill" :style="{width: getcompleted + '%'}"></div>
+            </div>
+            <span class="comp-pct">{{ getcompleted }}% Complete</span>
         </div>
-        <span class="comp-pct">{{ getcompleted }}% Complete</span>
-    </div>
-    <div  v-if="display==2" class="quiz-content">
-        <div class="slide simple-select-slide custom-slide">
-        <div class="header-lines">
-            <div class="header-container">
-                <h1>{{ question }}</h1>
+        <div  v-if="display==2" class="quiz-content">
+            <div class="quiz-title">
+                {{ question }}
             </div>
-        </div>
-        <div class="options
-            options-8
-            stack-horizontal
-            titles-long">
-            <span v-for="(option, index) in options">
-                <div class="details text-left" v-if="DisplayThis(3)">
-                    <input type="checkbox" :id="GetWithoutSpace(index)" :value="index" :name="GetWithoutSpace(index)" v-model="chk3" @click="PushResultAndRunAdditionalStep(index, option, 'chk3')" />{{ index }}
-                </div>
-                <div class="details text-left" v-else-if="DisplayThis(6)">
-                    <input type="checkbox" :id="GetWithoutSpace(index)" :value="index" :name="GetWithoutSpace(index)" v-model="chk6" @click="PushResultAndRunAdditionalStep(index, option, 'chk6')" />{{ index }}
-                </div>
-                <div class="details text-left" v-else-if="DisplayThis(8)">
-                    <input type="checkbox" :id="GetWithoutSpace(index)" :value="index" :name="GetWithoutSpace(index)" v-model="chk81" @click="PushResultAndRunAdditionalStep(index, option, 'chk81')" />{{ index }}
-                </div>
-                <div class="details text-left" v-else-if="DisplayThis(9)">
-                    <input type="checkbox" :id="GetWithoutSpace(index)" :value="index" :name="GetWithoutSpace(index)" v-model="chk82" @click="PushResultAndRunAdditionalStep(index, option, 'chk82')" />{{ index }}
-                </div>
-                <div class="details text-left" v-else-if="DisplayThis(10)">
-                    <input type="checkbox" :id="GetWithoutSpace(index)" :value="index" :name="GetWithoutSpace(index)" v-model="chk83" @click="PushResultAndRunAdditionalStep(index, option, 'chk83')" />{{ index }}
-                </div>
-                <div class="free-text-slide" v-else-if="tpltype==='textbox'" >
-                {{ index }} <input :class="GetRandomColor()" :id="GetWithoutSpace(index)" >
-                </div>
-            <div v-else class="auto-next option-box" :class="GetRandomColor()" :id="index" @click="SetNextQuestion(index, option)"><div class="option-title">{{ index }}</div></div>
-            </span>
-            <br/>
-            <div class="free-text-slide"><input type="textbox" v-if="ShowTextBox(3)" v-model="chk3other" />
-            <input type="textbox" v-if="ShowTextBox(6)" v-model="chk6other" />
-            <input type="textbox" v-if="ShowTextBox(10)" v-model="chk10other" />
-            <div class="input">
-            <button class="next" v-if="tpltype==='checkbox' || tpltype==='textbox'" @click="SetNextQuestion(null, tpl)"> Next </button>
-            </div>
-            </div>
-            </div>
+            <div class="quiz-options" :class="{ 'box-options': boxoptions, 'list-options': !boxoptions }">
+                <div v-for="(option, index) in options">
+                    <div class="checkbox-list" v-if="DisplayThis(3)">
+                        <input type="checkbox" :id="GetWithoutSpace(index)" :value="index" :name="GetWithoutSpace(index)" v-model="chk3" @click="PushResultAndRunAdditionalStep(index, option, 'chk3')" />
+                        <label :for="GetWithoutSpace(index)" class="checkbox-bg"></label>
+                        <label :for="GetWithoutSpace(index)" class="checkbox-content">{{ index }}</label>
+                    </div>
+                    <div class="checkbox-list" v-else-if="DisplayThis(6)">
+                        <input type="checkbox" :id="GetWithoutSpace(index)" :value="index" :name="GetWithoutSpace(index)" v-model="chk6" @click="PushResultAndRunAdditionalStep(index, option, 'chk6')" />
+                        <label :for="GetWithoutSpace(index)" class="checkbox-bg"></label>
+                        <label :for="GetWithoutSpace(index)" class="checkbox-content">{{ index }}</label>
+                    </div>
+                    <div class="checkbox-list" v-else-if="DisplayThis(8)">
+                        <input type="checkbox" :id="GetWithoutSpace(index)" :value="index" :name="GetWithoutSpace(index)" v-model="chk81" @click="PushResultAndRunAdditionalStep(index, option, 'chk81')" />
+                        <label :for="GetWithoutSpace(index)" class="checkbox-bg"></label>
+                        <label :for="GetWithoutSpace(index)" class="checkbox-content">{{ index }}</label>
+                    </div>
+                    <div class="checkbox-list" v-else-if="DisplayThis(9)">
+                        <input type="checkbox" :id="GetWithoutSpace(index)" :value="index" :name="GetWithoutSpace(index)" v-model="chk82" @click="PushResultAndRunAdditionalStep(index, option, 'chk82')" />
+                        <label :for="GetWithoutSpace(index)" class="checkbox-bg"></label>
+                        <label :for="GetWithoutSpace(index)" class="checkbox-content">{{ index }}</label>
+                    </div>
+                    <div class="checkbox-list" v-else-if="DisplayThis(10)">
+                        <input type="checkbox" :id="GetWithoutSpace(index)" :value="index" :name="GetWithoutSpace(index)" v-model="chk83" @click="PushResultAndRunAdditionalStep(index, option, 'chk83')" />
+                        <label :for="GetWithoutSpace(index)" class="checkbox-bg"></label>
+                        <label :for="GetWithoutSpace(index)" class="checkbox-content">{{ index }}</label>
+                    </div>
+                    <div class="free-text-slide" v-else-if="tpltype==='textbox'" >
+                        <label>{{ index }}</label>
+                        <input type="text" :class="GetRandomColor()" :id="GetWithoutSpace(index)" >
+                    </div>
 
-        
-    </div>
+                    <div v-else class="option-box" :class="GetRandomColor()" :id="index" @click="SetNextQuestion(index, option)">
+                        <div class="option-title">{{ index }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="free-text-slide">
+                <input type="text" v-if="ShowTextBox(3)" v-model="chk3other" />
+                <input type="text" v-if="ShowTextBox(6)" v-model="chk6other" />
+                <input type="text" v-if="ShowTextBox(10)" v-model="chk10other" />
+                <div class="input">
+                    <button type="button" class="btn btn-blue btn-arrow next" v-if="tpltype==='checkbox' || tpltype==='textbox'" @click="SetNextQuestion(null, tpl)"> Next </button>
+                </div>
+            </div>
         </div>
-    <div v-else-if="display==3">
-        {{ result.message }}
-        <div class="contact" v-if="result.contact">Thank you for taking Legacy Check<span class="superscript">SM</span>. The notes below were generated based on your responses. Per your request, someone will be in touch with you shortly.</div>
-      <div class="contact" v-if="!result.contact">Thank you for taking Legacy Check<span class="superscript">SM</span>. The notes below were generated based on your responses. Please contact us at (704) 887-4944 or info@starrettlawfirm.com if you wish to discuss.</div>
-      <div v-if="!result.message">
-          <div v-for="(options, questionNum) in outputDisclaimer">
-              <div v-for="option in options">
-                {{qs[questionNum]["o"][option].r}}
-              </div>
-              <div v-if="!isRevocable && factorsLength">
-                  Special Note: You listed {{factorsLength}} factor(s) that indicate a basic living trust may be appropriate for your situation.
-                  <div v-for="(val, key) in factors">
-                      {{key}} => {{val}}
-                  </div>
-              </div>
-              
-          </div>
-          Disclaimer: Our firm provides Legacy Check<span class="superscript">SM</span> for general guidance and educational purposes only. Information found herein may not reflect the most current legal developments. Contact a licensed attorney in your state for specific and up-to-date legal advice.
-              
-              <button>Save results as PDF</button>
-              <button>Email results</button>
-              Tell Others!  If you found Legacy Check<span class="superscript">SM</span> helpful, please tell others to visit <a href="http://mylegacycheck.com">MyLegacyCheck.com</a>
-      </div>
-    </div>
+        <div v-else-if="display==3">
+            {{ result.message }}
+            <div class="contact color-yellow" v-if="result.contact">Thank you for taking Legacy Check<span class="superscript">SM</span>. The notes below were generated based on your responses. Per your request, someone will be in touch with you shortly.</div>
+            <div class="contact color-yellow" v-if="!result.contact">Thank you for taking Legacy Check<span class="superscript">SM</span>. The notes below were generated based on your responses. Please contact us at <a href="tel:(704) 887-4944">(704) 887-4944</a> or <a href="mailto:info@starrettlawfirm.com">info@starrettlawfirm.com</a> if you wish to discuss.</div>
+            <div v-if="!result.message">
+                <div v-for="(options, questionNum) in outputDisclaimer">
+                    <div v-for="option in options" class="color-blue">
+                        {{qs[questionNum]["o"][option].r}}
+                    </div>
+                    <div v-if="!isRevocable && factorsLength">
+                        Special Note: You listed {{factorsLength}} factor(s) that indicate a basic living trust may be appropriate for your situation.
+                        <div v-for="(val, key) in factors"  class="color-green">
+                            {{key}}
+                            <div v-if="typeof val == 'object'" v-for="(value, valkey) in val"  class="color-asddsa">
+                                {{value}}
+                            </div>
+                            <div v-else>
+                                {{val}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="disclaimer-content">
+                    Disclaimer: Our firm provides Legacy Check<span class="superscript">SM</span> for general guidance and educational purposes only. Information found herein may not reflect the most current legal developments. Contact a licensed attorney in your state for specific and up-to-date legal advice.
+                </div>
+                <button type="button" class="btn btn-blue btn-arrow">Save results as PDF</button>
+                <button type="button" class="btn btn-blue btn-arrow">Email results</button>
+                <div class="footer-content">
+                    Tell Others!  If you found Legacy Check<span class="superscript">SM</span> helpful, please tell others to visit <a href="http://mylegacycheck.com">MyLegacyCheck.com</a>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -149,6 +162,9 @@
             },
         },
         computed: {
+            boxoptions: function() {
+                return this.tpltype != 'checkbox';
+            },
             question: function () {
                 return this.qs[this.currentQuestion] ? this.qs[this.currentQuestion]["q"] : -1;
             },
@@ -475,562 +491,4 @@
         }
     }
 </script>
-<style scoped lang="sass">
-    .progress-bar {
-  display: flex;
-  justify-content: space-between;
-  margin: 1rem auto;
-  width: 34rem; }
-  @media (max-width: 767px) {
-    .progress-bar {
-      padding: 0 1rem;
-      width: 100%; } }
-  .progress-bar .container {
-    background: #EDEDED;
-    display: inline-block;
-    height: 0.4rem;
-    width: 27.4rem; }
-    @media (max-width: 767px) {
-      .progress-bar .container {
-        flex: 1; } }
-    .progress-bar .container .fill {
-      background: #54A5D9;
-      height: 100%;
-      transition: width 0.4s;
-      width: 0; }
-  .progress-bar .comp-pct {
-    display: inline-block;
-    font-size: 0.95rem;
-    line-height: 0.4rem;
-    margin-top: 0.05rem; }
-    @media (max-width: 767px) {
-      .progress-bar .comp-pct {
-        margin-left: 1rem; } }
-
-    .quiz-content {
-  margin: 0px auto;
-  width: 850px; }
-  @media (max-width: 979px) {
-    .quiz-content {
-      width: auto; } }
-  .quiz-content .dropdown-slide select {
-    display: inline-block;
-    height: 40px;
-    line-height: 30px;
-    border: 1px solid #aaa;
-    padding: 10px;
-    color: #555;
-    font-size: 28px;
-    width: 100%; }
-  .quiz-content .dropdown-slide button {
-    margin-top: 10px;
-    font-size: 36px; }
-  .quiz-content .free-text-slide input {
-    display: block;
-    font-size: 34px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    margin: 20px auto;
-    padding: 5px;
-    width: 600px; }
-    @media (max-width: 979px) {
-      .quiz-content .free-text-slide input {
-        width: 480px; } }
-    .quiz-content .free-text-slide input[type=number]::-webkit-outer-spin-button, .quiz-content .free-text-slide input[type=number]::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0; }
-    .quiz-content .free-text-slide input[type=number] {
-      -moz-appearance: textfield; }
-  .quiz-content .free-text-slide button {
-    margin-top: 10px;
-    margin-bottom: 20px;
-    font-size: 36px; }
-  .quiz-content .progression {
-    width: 380px;
-    height: 30px;
-    margin: 5px auto 20px auto;
-    position: relative; }
-    .quiz-content .progression h5 {
-      display: inline-block;
-      margin: 10px; }
-    .quiz-content .progression .meter {
-      display: inline-block;
-      position: absolute;
-      top: 3px;
-      right: 0px;
-      width: 250px;
-      height: 25px;
-      border-radius: 10px;
-      border: 2px solid; }
-      .quiz-content .progression .meter .meter-fill {
-        left: 0px;
-        width: 0px;
-        height: 22px;
-        border-radius: 7px; }
-  .quiz-content .slide {
-    margin: 0px auto 60px auto;
-    text-align: center;
-    vertical-align: middle; }
-    .quiz-content .slide h1 {
-      display: block;
-      margin: auto;
-      width: 635px;
-      font-weight: 700;
-      font-size: 40px; }
-      @media (max-width: 979px) {
-        .quiz-content .slide h1 {
-          font-size: 36px; } }
-    .quiz-content .slide h2 {
-      font-size: 24px; }
-      @media (max-width: 979px) {
-        .quiz-content .slide h2 {
-          font-size: 20px; } }
-    .quiz-content .slide h3 {
-      margin: 10px;
-      font-size: 14px;
-      font-weight: 700; }
-    .quiz-content .slide h4 {
-      font-weight: 700; }
-    .quiz-content .slide h5 {
-      font-weight: 700;
-      color: #3073ab;
-      font-size: 18px; }
-      @media (max-width: 979px) {
-        .quiz-content .slide h5 {
-          font-size: 20px; } }
-    .quiz-content .slide p {
-      color: #949494; }
-  .quiz-content .simple-select-slide .option-title {
-    font-size: 19px; }
-    @media (max-width: 979px) {
-      .quiz-content .simple-select-slide .option-title {
-        font-size: 24px; } }
-  .quiz-content .simple-select-slide p {
-    font-size: 16px; }
-    @media (max-width: 979px) {
-      .quiz-content .simple-select-slide p {
-        font-size: 18px; } }
-  .quiz-content .simple-select-slide.box-rectangle.flow-block .option-box {
-    width: 600px;
-    padding: 15px; }
-    @media (max-width: 979px) {
-      .quiz-content .simple-select-slide.box-rectangle.flow-block .option-box {
-        width: 500px; } }
-  .quiz-content .simple-select-slide.box-rectangle.flow-inline .option-box {
-    width: 300px;
-    padding: 20px; }
-    @media (max-width: 979px) {
-      .quiz-content .simple-select-slide.box-rectangle.flow-inline .option-box {
-        width: 280px; } }
-  .quiz-content .simple-select-slide.box-large-square .option-box {
-    vertical-align: top;
-    width: 199px;
-    height: 140px;
-    padding: 10px; }
-    .quiz-content .simple-select-slide.box-large-square .option-box .img {
-      height: 100px; }
-    .quiz-content .simple-select-slide.box-large-square .option-box .fa {
-      font-size: 100px; }
-    .quiz-content .simple-select-slide.box-large-square .option-box p {
-      margin-top: 20px; }
-    @media (max-width: 979px) {
-      .quiz-content .simple-select-slide.box-large-square .option-box {
-        width: 280px;
-        height: 110px;
-        padding: 10px 0; }
-        .quiz-content .simple-select-slide.box-large-square .option-box .img {
-          height: 60px; }
-        .quiz-content .simple-select-slide.box-large-square .option-box .fa {
-          font-size: 60px; }
-        .quiz-content .simple-select-slide.box-large-square .option-box p {
-          margin-top: 10px; } }
-  .quiz-content .simple-select-slide.box-small-square .option-box {
-    vertical-align: top;
-    width: 90px;
-    height: 90px;
-    padding: 10px; }
-    .quiz-content .simple-select-slide.box-small-square .option-box .img {
-      height: 40px;
-      bottom: 15px; }
-    .quiz-content .simple-select-slide.box-small-square .option-box .fa {
-      font-size: 40px;
-      bottom: 15px; }
-    @media (max-width: 979px) {
-      .quiz-content .simple-select-slide.box-small-square .option-box {
-        width: 85px; } }
-  .quiz-content .simple-select-slide.box-square .option-box {
-    vertical-align: top;
-    width: 180px;
-    height: 160px; }
-    .quiz-content .simple-select-slide.box-square .option-box .img {
-      height: 90px; }
-    .quiz-content .simple-select-slide.box-square .option-box .fa {
-      font-size: 90px; }
-    @media (max-width: 979px) {
-      .quiz-content .simple-select-slide.box-square .option-box {
-        width: 280px;
-        height: 110px;
-        padding: 10px 0; }
-        .quiz-content .simple-select-slide.box-square .option-box .img {
-          height: 60px; }
-        .quiz-content .simple-select-slide.box-square .option-box .fa {
-          font-size: 60px; } }
-  .quiz-content .simple-select-slide.flow-block .option-box {
-    display: block; }
-  .quiz-content .simple-select-slide.flow-inline .option-box {
-    display: inline-block; }
-  .quiz-content .simple-select-slide .img {
-    display: block;
-    background-size: contain;
-    background-position: center center;
-    background-repeat: no-repeat;
-    position: absolute;
-    bottom: 30px;
-    left: 15px;
-    right: 15px; }
-    @media (max-width: 979px) {
-      .quiz-content .simple-select-slide .img {
-        bottom: 15px; } }
-  .quiz-content .simple-select-slide .fa {
-    display: block;
-    position: absolute;
-    bottom: 30px;
-    left: 15px;
-    right: 15px;
-    width: auto;
-    text-align: center; }
-    @media (max-width: 979px) {
-      .quiz-content .simple-select-slide .fa {
-        bottom: 15px; } }
-  .quiz-content .simple-select-slide .clickable {
-    cursor: pointer; }
-  .quiz-content .simple-select-slide .option-box {
-    background: #f1f1f1;
-    border: 2px solid #e0e0e0;
-    border-radius: 5px;
-    color: #4c4c4c;
-    padding: 10px 0px;
-    text-align: center;
-    margin: 5px;
-    position: relative; }
-    .quiz-content .simple-select-slide .option-box:hover {
-      background: #f0b831;
-      border: 2px solid #f0b831; }
-      @media (max-width: 979px) {
-        .quiz-content .simple-select-slide .option-box:hover {
-          background: #f1f1f1;
-          border: 2px solid #e0e0e0; } }
-    .quiz-content .simple-select-slide .option-box.has-color:hover {
-      box-shadow: inset 0px 0px 15px rgba(0, 0, 0, 0.7); }
-      @media (max-width: 979px) {
-        .quiz-content .simple-select-slide .option-box.has-color:hover {
-          box-shadow: none; } }
-    .quiz-content .simple-select-slide .option-box.text-only-option {
-      vertical-align: middle; }
-    .quiz-content .simple-select-slide .option-box .option-title {
-      font-weight: 700; }
-    .quiz-content .simple-select-slide .option-box p {
-      margin: 10px 10px; }
-  .quiz-content .simple-select-slide .options {
-    display: inline-block;
-    vertical-align: middle;
-    margin-top: 20px; }
-
-.stupid-links {
-  position: fixed;
-  bottom: 5px;
-  right: 5px; }
-  @media (max-width: 979px) {
-    .stupid-links {
-      display: none; } }
-
-@media (max-width: 979px) {
-  .quiz-content .free-text-slide .input {
-    padding: 0 1rem; } }
-
-.quiz-content .free-text-slide .input button {
-  border-radius: 0;
-  background: #59B54C;
-  font-size: 26px;
-  margin-top: 0;
-  padding: 20px 0;
-  width: 600px; }
-.quiz-content .free-text-slide .input button.next {
-    width: 200px;
-}
-  @media (max-width: 979px) {
-    .quiz-content .free-text-slide .input button {
-      font-size: 30px;
-      width: 500px; } }
-  .quiz-content .free-text-slide .input button:focus {
-    outline: none; }
-  .quiz-content .free-text-slide .input button:hover {
-    background: #4D9E42; }
-  .quiz-content .free-text-slide .input button:active {
-    background: #438939;
-    box-shadow: none; }
-
-.quiz-content .free-text-slide .input input {
-  background: #EDEDED;
-  border: none;
-  border-radius: 0;
-  color: #43464B;
-  font-size: 26px;
-  font-weight: 500;
-  margin: 10px auto;
-  padding: 20px 0;
-  text-align: center;
-  width: 600px; }
-  @media (max-width: 979px) {
-    .quiz-content .free-text-slide .input input {
-      width: 500px; } }
-  .quiz-content .free-text-slide .input input::webkit-input-placeholder {
-    color: #87888B;
-    font-weight: 300; }
-  .quiz-content .free-text-slide .input input::-moz-placeholder {
-    color: #87888B;
-    font-weight: 300; }
-  .quiz-content .free-text-slide .input input:-ms-input-placeholder {
-    color: #87888B;
-    font-weight: 300; }
-  .quiz-content .free-text-slide .input input:focus {
-    outline: none; }
-
-.quiz-content .loading-slide .spinner-container {
-  margin: 150px auto 0 auto;
-  position: relative;
-  width: 200px; }
-  @media (max-width: 979px) {
-    .quiz-content .loading-slide .spinner-container {
-      margin-top: 30%;
-      width: 100%; } }
-  .quiz-content .loading-slide .spinner-container img {
-    height: 150px;
-    position: relative;
-    width: 150px; }
-    @media (max-width: 979px) {
-      .quiz-content .loading-slide .spinner-container img {
-        height: 10rem;
-        width: 10rem; } }
-  .quiz-content .loading-slide .spinner-container .caption-container {
-    left: 50%;
-    position: absolute;
-    top: 50%;
-    transform: translateX(-50%) translateY(-50%); }
-    @media (max-width: 979px) {
-      .quiz-content .loading-slide .spinner-container .caption-container {
-        width: 100%; } }
-    .quiz-content .loading-slide .spinner-container .caption-container .caption {
-      color: #757E8D;
-      font-size: 16px;
-      line-height: normal;
-      padding: 0 40px;
-      width: 85px; }
-      @media (max-width: 979px) {
-        .quiz-content .loading-slide .spinner-container .caption-container .caption {
-          font-size: 34px;
-          width: 150px; } }
-
-.quiz-content .short-contact-slide .tcpa-warning {
-  color: #B4B4B4;
-  font-size: 13px;
-  line-height: 1rem;
-  margin: 10px auto 0 auto;
-  text-align: justify;
-  width: 600px; }
-  @media (max-width: 979px) {
-    .quiz-content .short-contact-slide .tcpa-warning {
-      line-height: 0.9rem;
-      font-size: 0.7rem;
-      padding: 0 1rem;
-      width: 100%; } }
-  .quiz-content .short-contact-slide .tcpa-warning a {
-    color: #B4B4B4;
-    font-size: 13px; }
-    @media (max-width: 979px) {
-      .quiz-content .short-contact-slide .tcpa-warning a {
-        font-size: 0.7rem; } }
-
-.quiz-content .simple-select-slide .details {
-  color: #757E8D;
-  font-family: Libre Franklin;
-  font-size: 18px;
-  font-style: italic;
-  font-weight: 300;
-  line-height: normal;
-  margin: 10px auto 0 auto;
-  width: 520px; }
-  @media (max-width: 979px) {
-    .quiz-content .simple-select-slide .details {
-      font-size: 0.9rem;
-      line-height: 1rem;
-      padding: 0 1rem;
-      width: 100%; } }
-
-.quiz-content .simple-select-slide .options {
-  margin-top: 15px; }
-  @media (max-width: 979px) {
-    .quiz-content .simple-select-slide .options {
-      margin-top: 5px;
-      padding: 0 1rem;
-      width: 100%; } }
-  .quiz-content .simple-select-slide .options.stack-horizontal .option-box {
-    height: 150px;
-    width: 150px; }
-    @media (max-width: 979px) {
-      .quiz-content .simple-select-slide .options.stack-horizontal .option-box {
-        float: left;
-        height: 5rem;
-        margin: 1%;
-        width: 48%; } }
-  .quiz-content .simple-select-slide .options.stack-horizontal.options-2 .option-box {
-    height: 190px;
-    width: 190px; }
-    @media (max-width: 979px) {
-      .quiz-content .simple-select-slide .options.stack-horizontal.options-2 .option-box {
-        height: 0;
-        padding: 24% 0;
-        width: 48%; } }
-  .quiz-content .simple-select-slide .options.stack-horizontal.options-6 .option-box {
-    height: 190px; }
-    @media (max-width: 979px) {
-      .quiz-content .simple-select-slide .options.stack-horizontal.options-6 .option-box {
-        height: 5.5rem; } }
-  .quiz-content .simple-select-slide .options.stack-horizontal.options-8 {
-    width: 700px; }
-    @media (max-width: 979px) {
-      .quiz-content .simple-select-slide .options.stack-horizontal.options-8 {
-        width: 100%; } }
-    @media (max-width: 979px) {
-      .quiz-content .simple-select-slide .options.stack-horizontal.options-8 .option-box {
-        height: 4.3rem; } }
-  .quiz-content .simple-select-slide .options.stack-vertical .option-box {
-    height: 100px;
-    width: 510px; }
-    @media (max-width: 979px) {
-      .quiz-content .simple-select-slide .options.stack-vertical .option-box {
-        height: 5rem;
-        margin: 1%;
-        width: 98%; } }
-  .quiz-content .simple-select-slide .options.stack-vertical.options-4 .option-box {
-    height: 70px; }
-    @media (max-width: 979px) {
-      .quiz-content .simple-select-slide .options.stack-vertical.options-4 .option-box {
-        height: 4.3rem; } }
-  .quiz-content .simple-select-slide .options.stack-vertical.options-5 .option-box {
-    height: 54px; }
-    @media (max-width: 979px) {
-      .quiz-content .simple-select-slide .options.stack-vertical.options-5 .option-box {
-        height: 3.4rem; } }
-  .quiz-content .simple-select-slide .options.stack-vertical.options-6 .option-box {
-    height: 57px; }
-    @media (max-width: 979px) {
-      .quiz-content .simple-select-slide .options.stack-vertical.options-6 .option-box {
-        height: 2.8rem; } }
-  .quiz-content .simple-select-slide .options.stack-vertical.options-7 .option-box {
-    height: 36px; }
-    @media (max-width: 979px) {
-      .quiz-content .simple-select-slide .options.stack-vertical.options-7 .option-box {
-        height: 2.6rem; } }
-  .quiz-content .simple-select-slide .options .option-box {
-    border: none;
-    border-radius: 0;
-    color: #FFFFFF;
-    cursor: pointer;
-    display: inline-block;
-    padding: 0;
-    vertical-align: top; }
-    .quiz-content .simple-select-slide .options .option-box:hover {
-      border: none; }
-    .quiz-content .simple-select-slide .options .option-box .option-title {
-      font-size: 1.375rem;
-      font-weight: 500;
-      left: 50%;
-      line-height: normal;
-      padding: 0 0.25rem;
-      position: absolute;
-      top: 50%;
-      transform: translateX(-50%) translateY(-50%);
-      width: 100%; }
-      @media (max-width: 979px) {
-        .quiz-content .simple-select-slide .options .option-box .option-title {
-          font-size: 1rem; } }
-    .quiz-content .simple-select-slide .options .option-box.color-blue {
-      background: #618FCB; }
-      .quiz-content .simple-select-slide .options .option-box.color-blue:hover {
-        background: #5076A8; }
-      .quiz-content .simple-select-slide .options .option-box.color-blue:active {
-        background: #405F87; }
-    .quiz-content .simple-select-slide .options .option-box.color-brown {
-      background: #BF8F59; }
-      .quiz-content .simple-select-slide .options .option-box.color-brown:hover {
-        background: #9E7649; }
-      .quiz-content .simple-select-slide .options .option-box.color-brown:active {
-        background: #7F5F3B; }
-    .quiz-content .simple-select-slide .options .option-box.color-green {
-      background: #6DC18B; }
-      .quiz-content .simple-select-slide .options .option-box.color-green:hover {
-        background: #5A9F73; }
-      .quiz-content .simple-select-slide .options .option-box.color-green:active {
-        background: #48805C; }
-    .quiz-content .simple-select-slide .options .option-box.color-orange {
-      background: #EFAD66; }
-      .quiz-content .simple-select-slide .options .option-box.color-orange:hover {
-        background: #C59054; }
-      .quiz-content .simple-select-slide .options .option-box.color-orange:active {
-        background: #9E7444; }
-    .quiz-content .simple-select-slide .options .option-box.color-purple {
-      background: #AD75AF; }
-      .quiz-content .simple-select-slide .options .option-box.color-purple:hover {
-        background: #906091; }
-      .quiz-content .simple-select-slide .options .option-box.color-purple:active {
-        background: #744D75; }
-    .quiz-content .simple-select-slide .options .option-box.color-red {
-      background: #EA7A59; }
-      .quiz-content .simple-select-slide .options .option-box.color-red:hover {
-        background: #C16449; }
-      .quiz-content .simple-select-slide .options .option-box.color-red:active {
-        background: #9B503B; }
-    .quiz-content .simple-select-slide .options .option-box.color-teal {
-      background: #79BBAD; }
-      .quiz-content .simple-select-slide .options .option-box.color-teal:hover {
-        background: #639B90; }
-      .quiz-content .simple-select-slide .options .option-box.color-teal:active {
-        background: #507D74; }
-    .quiz-content .simple-select-slide .options .option-box.color-yellow {
-      background: #CABA66; }
-      .quiz-content .simple-select-slide .options .option-box.color-yellow:hover {
-        background: #A79B54; }
-      .quiz-content .simple-select-slide .options .option-box.color-yellow:active {
-        background: #867D44; }
-
-.quiz-content .slide .header-lines {
-  min-height: 84px;
-  position: relative; }
-  @media (max-width: 979px) {
-    .quiz-content .slide .header-lines {
-      min-height: 4.2rem; } }
-  .quiz-content .slide .header-lines .header-container {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translateX(-50%) translateY(-50%);
-    width: 100%; }
-    @media (max-width: 979px) {
-      .quiz-content .slide .header-lines .header-container {
-        padding: 0 1rem; } }
-    .quiz-content .slide .header-lines .header-container h1 {
-      color: #43464B;
-      font-family: Libre Franklin;
-      font-size: 28px;
-      font-weight: 800;
-      width: 850px; }
-      @media (max-width: 979px) {
-        .quiz-content .slide .header-lines .header-container h1 {
-          font-size: 1.4rem;
-          line-height: 1.4rem;
-          width: 100%; } }
-      .text-left {
-          text-align: left;
-      }
-    </style>
+<style src="../shared/css/common.scss" lang="sass"></style>
