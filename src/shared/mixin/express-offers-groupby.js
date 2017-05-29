@@ -12,7 +12,7 @@ export default {
                 
                 // call function to build filters
                 if (typeof arrayFilterListFunctions != "undefined" && arrayFilterListFunctions.length > 0) {
-                    filterByObj = self.filterBy(loanRequest, referrals, offers[i], arrayFilterListFunctions, additionalData, filterByObj);
+                    filterByObj = self.getFilters(loanRequest, referrals, offers[i], arrayFilterListFunctions, additionalData, filterByObj);
                 }
             }
             this.setFilters(filterByObj);
@@ -34,6 +34,9 @@ export default {
                 var key = functionName;
                 if (typeof result == "string")
                     key = result;
+                
+                if (typeof result == "object" && result.text)
+                    key = result.text;
 
                 if (typeof obj[key] == "undefined" && typeof result != "undefined")
                     obj[key] = [];
@@ -45,7 +48,7 @@ export default {
             }
             return obj;
         },
-        filterBy (loanRequest, referrals, offer, functions, additionalData, obj) {
+        getFilters (loanRequest, referrals, offer, functions, additionalData, obj) {
             var self = this;
             for(var j=0;j<functions.length;++j) {
                 var functionName = functions[j];
@@ -79,7 +82,7 @@ export default {
                 for (var option in filterByObj[filterKey]) {
                     filterOptions.push({text: option, value: filterByObj[filterKey][option]})
                 }
-                self.Filters[filterKey] = filterOptions
+                self.$set(self.Filters, filterKey, filterOptions)
             }
         }
     }

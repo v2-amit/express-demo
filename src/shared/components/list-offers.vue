@@ -2,7 +2,7 @@
 <div>
     <div v-for="key in displayGroupListFunctions">
         <ul v-if="getGroupBy[key]">
-        {{key}}
+        key : {{key}}
         <br/>
         <li v-for="(offer, key) in getGroupBy[key]">
             offerID => {{offer.offerID}}

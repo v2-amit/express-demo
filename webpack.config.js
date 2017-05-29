@@ -14,7 +14,8 @@ function environment() {
 
 module.exports = {
     entry: {
-        purchase: './src/purchase/main'
+        purchase: './src/purchase/main',
+        flow: './src/flow/main'
     },
     output: {
         path: path.resolve(__dirname, './dist'),

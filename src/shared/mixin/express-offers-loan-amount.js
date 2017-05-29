@@ -1,37 +1,40 @@
 
 export default {
     methods: {
-        equalsRequestAmt (offer, loanRequest, referrals, additionalData) {
-            if (offer.offerAttributes.loanAmount) {
-                return offer.offerAttributes.loanAmount == loanRequest["amountRequested"]
-            }
+        RequestAmt (offer, loanRequest, referrals, additionalData) {
+            if (!offer.offerAttributes.loanAmount) 
+                return;
+            else if (offer.offerAttributes.loanAmount == loanRequest["amountRequested"])
+                return "equalsRequestAmt";
+            else if (offer.offerAttributes.loanAmount > loanRequest["amountRequested"])
+                return "greaterthanRequestAmt";
+            else if (offer.offerAttributes.loanAmount < loanRequest["amountRequested"])
+                return "lessthanRequestAmt";
         },
-        greaterthanRequestAmt (offer, loanRequest, referrals, additionalData) {
-            if (offer.offerAttributes.loanAmount) {
-                return offer.offerAttributes.loanAmount > loanRequest["amountRequested"]
-            }
-        },
-        lessthanRequestAmt(offer, loanRequest, referrals, additionalData) {
-            if (offer.offerAttributes.loanAmount) {
-                return offer.offerAttributes.loanAmount < loanRequest["amountRequested"]
-            }
+        RequestLoanAmt (offer, loanRequest, referrals, additionalData) {
+            if (!offer.offerAttributes.amortizationPeriodTimeUnitLookup) 
+                return;
+            return offer.offerAttributes.amortizationPeriodTimeUnitLookup;
         },
         getAmountRequested(offer, loanRequest, referrals, additionalData) {
             if (offer.offerAttributes.loanAmount) {
                 return {text: offer.offerAttributes.loanAmount, value: offer.offerAttributes.loanAmount}
             }
         },
-        findLenderDetails(referrals, key, value) {
-            if (typeof referrals == "object" && typeof referrals.find) {
-                return referrals.find(function(lender){
-                    return lender[key] == value
-                })
+        getAprRequested(offer, loanRequest, referrals, additionalData) {
+            if (offer.offerAttributes.apr) {
+                return {text: offer.offerAttributes.apr, value: offer.offerAttributes.apr}
             }
         },
-        getLenderList(offer, loanRequest, referrals, additionalData) {
-            if (offer.offerAttributes.lenderID) {
-                var lender = this.findLenderDetails(referrals, "trusteeID", offer.offerAttributes.lenderID)
-                return {text: lender.name, value: offer.offerAttributes.lenderID}
+        getFees(offer, loanRequest, referrals, additionalData) {
+            if (offer.offerAttributes.personalTotalFee) {
+                return {text: offer.offerAttributes.personalTotalFee, value: offer.offerAttributes.personalTotalFee}
+            }
+        },
+        getTermSelector(offer, loanRequest, referrals, additionalData) {
+            console.log(offer.offerAttributes.amortizationPeriodTimeUnitLookup);
+            if (offer.offerAttributes.amortizationPeriodTimeUnitLookup) {
+                return offer.offerAttributes.amortizationPeriodTimeUnitLookup;
             }
         }
     }
