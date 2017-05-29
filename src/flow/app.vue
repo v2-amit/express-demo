@@ -56,33 +56,40 @@
                 </div>
             </div>
         </div>
-        <div v-else-if="display==3">
+        <div v-else-if="display==3" class="text-left">
             {{ result.message }}
-            <div class="contact color-yellow" v-if="result.contact">Thank you for taking Legacy Check<span class="superscript">SM</span>. The notes below were generated based on your responses. Per your request, someone will be in touch with you shortly.</div>
-            <div class="contact color-yellow" v-if="!result.contact">Thank you for taking Legacy Check<span class="superscript">SM</span>. The notes below were generated based on your responses. Please contact us at <a href="tel:(704) 887-4944">(704) 887-4944</a> or <a href="mailto:info@starrettlawfirm.com">info@starrettlawfirm.com</a> if you wish to discuss.</div>
+            <div class="contact" v-if="result.contact">Thank you for taking Legacy Check<span class="superscript">SM</span>. The notes below were generated based on your responses. Per your request, someone will be in touch with you shortly.</div>
+
+            <div class="contact" v-if="!result.contact">Thank you for taking Legacy Check<span class="superscript">SM</span>. The notes below were generated based on your responses. Please contact us at <a href="tel:(704) 887-4944">(704) 887-4944</a> or <a href="mailto:info@starrettlawfirm.com">info@starrettlawfirm.com</a> if you wish to discuss.</div>
+
             <div v-if="!result.message">
                 <div v-for="(options, questionNum) in outputDisclaimer">
-                    <div v-for="option in options" class="color-blue">
+                    <ul>
+                    <li v-for="option in options" class="contact">
                         {{qs[questionNum]["o"][option].r}}
+                    </li>
+                    </ul>
+                </div>
+                 <div v-if="!isRevocable && factorsLength" class="contact">
+                        <b>Special Note:</b> You listed {{factorsLength}} factor(s) that indicate a basic living trust may be appropriate for your situation.
                     </div>
-                    <div v-if="!isRevocable && factorsLength">
-                        Special Note: You listed {{factorsLength}} factor(s) that indicate a basic living trust may be appropriate for your situation.
-                        <div v-for="(val, key) in factors"  class="color-green">
-                            {{key}}
-                            <div v-if="typeof val == 'object'" v-for="(value, valkey) in val"  class="color-asddsa">
-                                {{value}}
-                            </div>
-                            <div v-else>
+                    <div v-for="(val, key) in factors" class="contact">
+                        <b>{{key}}</b>
+                        <ul>
+                            <li v-if="typeof val != 'object'">
                                 {{val}}
-                            </div>
-                        </div>
-                    </div>
+                            </li>
+                            <li v-if="typeof val == 'object'" v-for="(value, valkey) in val"  class="contact">
+                                {{value}}
+                            </li>
+                        </ul>
+                        
                 </div>
                 <div class="disclaimer-content">
-                    Disclaimer: Our firm provides Legacy Check<span class="superscript">SM</span> for general guidance and educational purposes only. Information found herein may not reflect the most current legal developments. Contact a licensed attorney in your state for specific and up-to-date legal advice.
+                    <b>Disclaimer:</b> Our firm provides Legacy Check<span class="superscript">SM</span> for general guidance and educational purposes only. Information found herein may not reflect the most current legal developments. Contact a licensed attorney in your state for specific and up-to-date legal advice.
                 </div>
-                <button type="button" class="btn btn-blue btn-arrow">Save results as PDF</button>
-                <button type="button" class="btn btn-blue btn-arrow">Email results</button>
+                <button type="button" class="btn btn-blue btn-arrow btn-sm">Save results as PDF</button>
+                <button type="button" class="btn btn-blue btn-arrow btn-sm">Email results</button>
                 <div class="footer-content">
                     Tell Others!  If you found Legacy Check<span class="superscript">SM</span> helpful, please tell others to visit <a href="http://mylegacycheck.com">MyLegacyCheck.com</a>
                 </div>
@@ -150,7 +157,7 @@
             GetRandomColor() {
                 var arrAvailableColor = [
                     "color-blue",
-                    "color-brown",
+                    "color-pink",
                     "color-green",
                     "color-orange",
                     "color-purple",
