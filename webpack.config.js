@@ -15,6 +15,7 @@ function environment() {
 module.exports = {
     entry: {
         purchase: './src/purchase/main',
+        name: './src/name/main',
         flow: './src/flow/main'
     },
     output: {
