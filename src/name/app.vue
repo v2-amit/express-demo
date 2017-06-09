@@ -1,6 +1,10 @@
 <template>
 <div>
     {{firstName}} {{lastName}}
+    <br/>
+    fullName: {{fullName}}
+    <br/>
+    Enter full Name: <input v-model="fullName" />
 </div>
 </template>
 
@@ -9,7 +13,7 @@
     export default {
         props: {
           firstName: {
-            default: ""
+            default: "Mit"
           },
           lastName: {
             default: ""
@@ -17,7 +21,9 @@
         },
         data () {
             return {
+                fullName: this.firstName + " " + this.lastName
             }
-        }
+        },
+        
     }
 </script>
