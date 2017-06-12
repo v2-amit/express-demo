@@ -51,9 +51,9 @@
     export default {
         computed: {
             getGroupBy: function () {
-                this.Offers = this.Offers.filter(function(offer) {
-                    return offer.offerAttributes.referralID == 52656597
-                })
+//                this.Offers = this.Offers.filter(function(offer) {
+//                    return offer.offerAttributes.referralID == 52656597
+//                })
                 return this.groupByAndCreateFilters(this.LoanRequest, this.Referrals, this.Offers, this.GroupByList, this.FilterByList);
             }
         },
@@ -66,7 +66,7 @@
                 Fees: "",
                 TermSelector: "",
                 GroupByList: [
-                    "RequestLoanAmt"
+                    "getLenderList"
                 ],
                 FilterByList: [
                     "terms",
