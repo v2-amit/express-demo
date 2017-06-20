@@ -1,6 +1,6 @@
 export default {
     methods: {
-        terms (offer, loanRequest, referrals, additionalData) {
+        terms (loanRequest, referral, offer, additionalData) {
             var mo = offer.offerAttributes.amortizationPeriodInMonths;
             if (mo > 120) {
                 return "> 10 Year Term";

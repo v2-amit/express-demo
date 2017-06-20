@@ -30,7 +30,9 @@
             <div v-if="offers.length">
                 <div>{{offers.length}} {{key}}</div>
                 <hr/>
-                <list-offers :offers="offers" :loan-request="LoanRequest" :referrals="Referrals"></list-offers>
+                <li v-for="(offer, key) in getGroupBy[key]">
+                    offerID => {{offer.offerAttributes.lenderID}}
+                </li>
             </div>
         </div>
         <hr/><hr/>
@@ -66,12 +68,10 @@
                 Fees: "",
                 TermSelector: "",
                 GroupByList: [
-                    "getLenderList"
                 ],
                 FilterByList: [
                     "terms",
                     "getAmountRequested",
-                    "getLenderList",
                     "getAprRequested",
                     "getFees",
                     "getTermSelector"

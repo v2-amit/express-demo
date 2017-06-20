@@ -1,25 +1,33 @@
 
 export default {
     methods: {
-        groupByAndCreateFilters (loanRequest, referrals, offers, arrayGroupByFunctions, arrayFilterListFunctions, additionalData) {
+        groupByAndCreateFilters (loanRequest, referrals, offers, arrayGroupByFunctionsOnOffers, arrayGroupByFunctionsOnReferrals, arrayFilterListFunctions, additionalData) {
             var self = this;
             var groupByObj = {}, filterByObj = {};
+            var referralsObj = {}
+            for(var i=0;i<referrals.length;++i) {
+                referralsObj[referrals[i].trusteeID] = referrals[i];
+            }
             
             for(var i=0;i<offers.length;++i) {
                 // call function to build groupby
                 if (typeof arrayGroupByFunctions == "object" && arrayGroupByFunctions.length > 0)
-                    groupByObj = self.groupBy(loanRequest, referrals, offers[i], arrayGroupByFunctions, additionalData, groupByObj);
-                
+                    groupByObj = self.groupBy(loanRequest, referralsObj[offers[i].offerAttributes.lenderID], offers[i], arrayGroupByFunctions, additionalData, groupByObj);
+                else {
+                    if (typeof groupByObj[""] == "undefined")
+                        groupByObj[""] = [];
+                    groupByObj[""].push(offers[i]);
+                }
                 // call function to build filters
                 if (typeof arrayFilterListFunctions != "undefined" && arrayFilterListFunctions.length > 0) {
-                    filterByObj = self.getFilters(loanRequest, referrals, offers[i], arrayFilterListFunctions, additionalData, filterByObj);
+                    filterByObj = self.getFilters(loanRequest, referralsObj[offers[i].offerAttributes.lenderID], offers[i], arrayFilterListFunctions, additionalData, filterByObj);
                 }
             }
             this.setFilters(filterByObj);
             
             return groupByObj;
         },
-        groupBy (loanRequest, referrals, offer, functions, additionalData, obj) {
+        groupBy (loanRequest, referral, offer, functions, additionalData, obj) {
             var self = this;
             for(var j=0;j<functions.length;++j) {
                 var functionName = functions[j];
@@ -29,12 +37,13 @@ export default {
                     return;
                 }
 
-                var result = self[functionName](offer, loanRequest, referrals, additionalData);
+                var result = self[functionName](loanRequest, referral, offer, additionalData);
 
                 var key = functionName;
                 if (typeof result == "string")
                     key = result;
                 
+                //ideal type is object {text: "", value: ""}
                 if (typeof result == "object" && result.text)
                     key = result.text;
 
@@ -48,7 +57,7 @@ export default {
             }
             return obj;
         },
-        getFilters (loanRequest, referrals, offer, functions, additionalData, obj) {
+        getFilters (loanRequest, referral, offer, functions, additionalData, obj) {
             var self = this;
             for(var j=0;j<functions.length;++j) {
                 var functionName = functions[j];
@@ -58,7 +67,7 @@ export default {
                     return;
                 }
 
-                var result = self[functionName](offer, loanRequest, referrals, additionalData);
+                var result = self[functionName](loanRequest, referral, offer, additionalData);
                 var key = functionName;
                 if (typeof obj[key] == "undefined" && typeof result != "undefined") {
                     obj[key] = {};

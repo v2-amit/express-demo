@@ -8,7 +8,7 @@ export default {
                 })
             }
         },
-        getLenderList(offer, loanRequest, referrals, additionalData) {
+        getLenderList(loanRequest, referral, offer, additionalData) {
             console.log(offer.offerAttributes);
             if (offer.offerAttributes.lenderID) {
                 var lender = this.findLenderDetails(referrals, "trusteeID", offer.offerAttributes.lenderID)
