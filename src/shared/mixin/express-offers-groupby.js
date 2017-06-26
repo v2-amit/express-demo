@@ -11,15 +11,17 @@ export default {
             
             for(var i=0;i<offers.length;++i) {
                 // call function to build groupby
-                if (typeof arrayGroupByFunctions == "object" && arrayGroupByFunctions.length > 0)
-                    groupByObj = self.groupBy(loanRequest, referralsObj[offers[i].offerAttributes.lenderID], offers[i], arrayGroupByFunctions, additionalData, groupByObj);
+                if (typeof arrayGroupByFunctionsOnOffers == "object" && arrayGroupByFunctionsOnOffers.length > 0)
+                    groupByObj = self.groupBy(loanRequest, referralsObj[offers[i].offerAttributes.lenderID], offers[i], arrayGroupByFunctionsOnOffers, additionalData, groupByObj);
                 else {
                     if (typeof groupByObj[""] == "undefined")
                         groupByObj[""] = [];
                     groupByObj[""].push(offers[i]);
                 }
+                    
                 // call function to build filters
                 if (typeof arrayFilterListFunctions != "undefined" && arrayFilterListFunctions.length > 0) {
+                    console.log('calling getFilters')
                     filterByObj = self.getFilters(loanRequest, referralsObj[offers[i].offerAttributes.lenderID], offers[i], arrayFilterListFunctions, additionalData, filterByObj);
                 }
             }

@@ -31,7 +31,7 @@
                 <div>{{offers.length}} {{key}}</div>
                 <hr/>
                 <li v-for="(offer, key) in getGroupBy[key]">
-                    offerID => {{offer.offerAttributes.lenderID}}
+                    offerID => {{offer.offerAttributes.monthlyPayment || offer.offerAttributes.repaymentAmount}}
                 </li>
             </div>
         </div>
@@ -56,7 +56,7 @@
 //                this.Offers = this.Offers.filter(function(offer) {
 //                    return offer.offerAttributes.referralID == 52656597
 //                })
-                return this.groupByAndCreateFilters(this.LoanRequest, this.Referrals, this.Offers, this.GroupByList, this.FilterByList);
+                return this.groupByAndCreateFilters(this.LoanRequest, this.Referrals, this.Offers, this.GroupByList, [], this.FilterByList);
             }
         },
         data () {
@@ -68,6 +68,7 @@
                 Fees: "",
                 TermSelector: "",
                 GroupByList: [
+                    "getRegularAndSecuredAndShortTermAndPending"
                 ],
                 FilterByList: [
                     "terms",

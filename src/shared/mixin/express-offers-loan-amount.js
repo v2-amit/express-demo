@@ -36,6 +36,14 @@ export default {
             if (offer.offerAttributes.amortizationPeriodTimeUnitLookup) {
                 return offer.offerAttributes.amortizationPeriodTimeUnitLookup;
             }
-        }
+        },
+        getRegularAndSecuredAndShortTermAndPending(loanRequest, referral, offer, additionalData) {
+            if (offer.offerAttributes.amortizationPeriodTimeUnitLookup.toLowerCase() == "days" && offer.offerAttributes.personalAmortizationPeriod < 61) 
+                return {text: "short term", value: "short term"}
+            if (!offer.offerAttributes.isCollateralRequired) 
+                return {text: "regular", value: "regular"}
+            else if (offer.offerAttributes.isCollateralRequired)
+                return {text: "secured", value: "secured"}
+        },
     }
 }
