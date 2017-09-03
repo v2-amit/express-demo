@@ -1,5 +1,29 @@
 /* reset css */
-* {
+  @font-face {
+    font-family: 'My Font One';
+    src: url('http://starrettlawfirm.com/wp-content/themes/Blandes/font/MuseoSans_500-webfont.eot');
+    src:
+        url('http://starrettlawfirm.com/wp-content/themes/Blandes/font/MuseoSans_500-webfont.eot?#iefix') format('eot'),
+        url('http://starrettlawfirm.com/wp-content/themes/Blandes/font/MuseoSans_500-webfont.woff') format('woff'),
+        url('http://starrettlawfirm.com/wp-content/themes/Blandes/font/MuseoSans_500-webfont.ttf') format('truetype'),
+        url('http://starrettlawfirm.com/wp-content/themes/Blandes/font/MuseoSans_500-webfont.svg#MyFontOne') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    }
+  
+    @font-face {
+    font-family: 'My Font Two';
+    src: url('http://starrettlawfirm.com/wp-content/themes/Blandes/font/MuseoSans_500.eot');
+    src:
+        url('http://starrettlawfirm.com/wp-content/themes/Blandes/font/MuseoSans_500.eot?#iefix') format('eot'),
+        url('http://starrettlawfirm.com/wp-content/themes/Blandes/font/MuseoSans_500.woff') format('woff'),
+        url('http://starrettlawfirm.com/wp-content/themes/Blandes/font/MuseoSans_500.ttf') format('truetype'),
+        url('http://starrettlawfirm.com/wp-content/themes/Blandes/font/MuseoSans_500.svg#MyFontTwo') format('svg');
+    font-weight: normal;
+    font-style: normal;
+ }
+
+ * {
     margin: 0;
     padding: 0;
 }
@@ -14,8 +38,8 @@ html {
 }
 
 body {
-    font-family: Open Sans, Arial, Sans-Serif;
-    font-size: 14px;
+    font-family: My Font One, 'Open Sans', Arial, Sans-Serif;
+    font-size: 13px;
     color: #333;
     line-height: 1.6em;
     overflow-x: hidden;
@@ -66,7 +90,7 @@ p {
 }
 
 input, select, textarea, button {
-    font-family: Open Sans, Arial, Sans-Serif;
+    font-family: inherit;
     outline: none;
 }
 
@@ -108,6 +132,7 @@ select {
 }
 
 input[type=text] {
+    text-align: center;
     display: inline-block;
     vertical-align: top;
     position: relative;
@@ -125,10 +150,10 @@ input[type=text] {
     transition: all .3s;
 
     &:focus {
-        border: 1px solid #2cace3;
+        border: 1px solid #2281b3;
         outline: 0;
         box-shadow: none;
-        background: #edf5f8;
+        background: #f1f7fb;
     }
 
     &::-ms-clear {
@@ -219,6 +244,15 @@ input[type=text] {
     }
 }
 
+.btn-green {
+    background-color: #34a34c;
+    text-shadow: 0 1px 1px #187d2e;
+
+    &:hover, &:active, &:focus {
+        background-color: #1a8e33;
+    }
+}
+
 .btn-gray {
     background-color: #e1e1e1;
     color: #666666;
@@ -233,11 +267,28 @@ input[type=text] {
     width: 250px;
 }
 
+h5 {
+    font-size: 18px;
+    font-style: italic;
+    font-weight: 700;
+    color: #1d4164;
+    margin-bottom: 10px;
+
+    a {
+        color: #34a34c;
+    }
+}
+
 #quiz {
     text-align: center;
-    max-width: 700px;
+    max-width: 900px;
     margin: 30px auto;
     padding: 0 25px;
+
+    .logo {
+        display: inline-block;
+        margin-bottom: 20px;
+    }
     
     .contact ul {
         margin-left: 20px;
@@ -246,24 +297,36 @@ input[type=text] {
     .progress-bar {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 25px;
-        width: 100%;
+        max-width: 750px;
+        margin:0 auto 25px;
 
         .container {
-            height: 7px;
-            width: 84%;
+            height: 5px;
+            width: 86%;
             background: #eee;
-            margin-top: 8px;
+            margin-top: 10px;
 
             .fill {
-                background: #00aeef;
+                background: #2281b3;
                 height: 100%;
                 transition: width 0.4s;
             }
         }
+
+        .comp-pct {
+            font-size: 13px;
+            color: #134369;
+            font-weight: 600;
+        }
+    }
+
+    .quiz-content {
+        max-width: 750px;
+        margin: 0 auto;
     }
 
     .quiz-title {
+        color: #1d4164;
         font-size: 25px;
         line-height: normal;
         margin-bottom: 30px;
@@ -273,6 +336,10 @@ input[type=text] {
     .box-options {
         & > div {
             display: inline-block;
+
+            &:first-child .free-text-slide label {
+                margin-top: 0;
+            }
         }
     }
 
@@ -280,6 +347,7 @@ input[type=text] {
         max-width: 500px;
         margin: 0 auto;
         text-align: left;
+        display: inline-block;
 
         & > div {
             display: block;
@@ -425,7 +493,7 @@ input[type=text] {
             position: absolute;
             top: 0;
             left: 0;
-            background: #7ac142;
+            background: #1b4164;
             border-radius: 2px;
             transition: all .3s;
         }
@@ -465,8 +533,43 @@ input[type=text] {
         }
     }
 
+    .result-block {
+        padding: 40px;
+        border-top: solid #34a34c 3px;
+        color: #1d4164;
+        margin-top: 25px;
+        background: #f1f2f2;
+        text-align: left;
+
+        h5 {
+            font-size: 18px;
+            font-style: italic;
+            font-weight: 700;
+            color: #1d4164;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            list-style: none;
+
+            li {
+                margin-bottom: 20px;
+            }
+        }
+
+        label {
+            font-weight: 700;
+            display: block;
+            font-size: 14px;
+        }
+
+        div:last-child ul:last-child li {
+            margin-bottom: 0;
+        }
+    }
+
     .free-text-slide {
-        max-width: 500px;
+        width: 500px;
         margin: 0 auto;
 
         label {
@@ -490,11 +593,36 @@ input[type=text] {
         }
     }
 
-    .disclaimer-content, .footer-content {
+    .disclaimer-content {
         margin: 20px 0;
+        text-align: center;
+        color: #1d4164;
     }
 
     .contact {
+        color: #1d4164;
+        list-style: none;
         margin-bottom: 20px;
+    }
+
+    .footer-btn-section {
+        text-align: center;
+
+        h5 {
+            margin: 40px 0;
+        }
+
+        .btn {
+            text-transform: uppercase;
+            font-weight: 400;
+            margin-bottom: 10px;
+        }
+    }
+
+    sup {
+        font-size: 10px;
+        top: 0px;
+        position: relative;
+        left: 3px;
     }
 }
