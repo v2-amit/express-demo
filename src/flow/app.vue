@@ -55,7 +55,7 @@
                 <input type="text" v-if="ShowTextBox(6)" v-model="chk6other" />
                 <input type="text" v-if="ShowTextBox(10)" v-model="chk10other" />
                 <div class="input">
-                    <button type="button" class="btn btn-green btn-arrow next" v-if="tpltype==='checkbox' || tpltype==='textbox'" @click="SetNextQuestion(null, tpl)"> Next </button>
+                    <button type="button" class="btn btn-logo-green btn-arrow next" v-if="tpltype==='checkbox' || tpltype==='textbox'" @click="SetNextQuestion(null, tpl)"> Next </button>
                 </div>
             </div>
         </div>
@@ -92,8 +92,8 @@
 
                     <h5 v-if="!result.contact">Thank you for taking Legacy Check<sup>SM</sup>. The notes below were generated based on your responses. Please contact us at <a href="tel:(704) 887-4944">(704) 887-4944</a> or <a href="mailto:info@starrettlawfirm.com">info@starrettlawfirm.com</a> if you wish to discuss.</h5>
 
-                    <button type="button" class="btn btn-green btn-sm">Save results as PDF</button>
-                    <button type="button" class="btn btn-green btn-sm">Email results</button>
+                    <button type="button" class="btn btn-logo-green btn-sm">Save results as PDF</button>
+                    <button type="button" class="btn btn-logo-green btn-sm">Email results</button>
 
                     <h5>
                         Tell Others!  If you found Legacy Check<sup>SM</sup> helpful, please tell others to visit <a href="http://mylegacycheck.com">MyLegacyCheck.com</a>
@@ -168,16 +168,13 @@
             },
             GetRandomColor() {
                 var arrAvailableColor = [
-                    "color-blue",
-                    "color-pink",
-                    "color-green",
-                    "color-orange",
-                    "color-purple",
-                    "color-red",
-                    "color-teal",
-                    "color-yellow",
+                    "color-medium-blue",
+                    "color-light-blue",
+                    "color-logo-blue",
+                    "color-logo-green",
+                    "color-gray"
                 ]
-                return arrAvailableColor[Math.floor((Math.random() * 7))];
+                return arrAvailableColor[Math.floor((Math.random() * 4))];
             },
         },
         computed: {

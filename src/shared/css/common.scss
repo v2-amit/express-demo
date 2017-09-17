@@ -244,12 +244,12 @@ input[type=text] {
     }
 }
 
-.btn-green {
-    background-color: #34a34c;
-    text-shadow: 0 1px 1px #187d2e;
+.btn-logo-green {
+    background-color: #34A34B;
+    text-shadow: 0 1px 1px #34A34B;
 
     &:hover, &:active, &:focus {
-        background-color: #1a8e33;
+        background-color: #34A34B;
     }
 }
 
@@ -307,7 +307,7 @@ h5 {
             margin-top: 10px;
 
             .fill {
-                background: #2281b3;
+                background: #2281B3;
                 height: 100%;
                 transition: width 0.4s;
             }
@@ -363,102 +363,25 @@ h5 {
         cursor: pointer;
         transition: all .3s;
 
-        &.color-blue {
-            background: #00aeef;
-
-            &:hover {
-                background: #2f86d4;
-            }
-
-            &:active {
-                background: #1e73be;
-            }
+        &.color-medium-blue {
+            background: #2281B3;
         }
 
-        &.color-pink {
-            background: #dd2e86;
-
-            &:hover {
-                background: #c82a7a;
-            }
-
-            &:active {
-                background: #b01e68;
-            }
+        &.color-light-blue {
+            background: #94C5EA;
         }
 
-        &.color-green {
-            background: #7ac142;
-
-            &:hover {
-                background: #6fb44c;
-            }
-
-            &:active {
-                background: #60a33e;
-            }
+        &.color-logo-blue {
+            background: #1D4164;
         }
 
-        &.color-orange {
-            background: #ffa800;
-
-            &:hover {
-                background: #ff9900;
-            }
-
-            &:active {
-                background: #e38800;
-            }
+        &.color-logo-green {
+            background: #34A34B;
         }
 
-        &.color-purple {
-            background: #a3509f;
-
-            &:hover {
-                background: #913c8d;
-            }
-
-            &:active {
-                background: #7e307b;
-            }
+        &.color-gray {
+            background: #6D6E70;
         }
-
-        &.color-red {
-            background: #ff1212;
-
-            &:hover {
-                background: #dd0000;
-            }
-
-            &:active {
-                background: #c40000;
-            }
-        }
-
-        &.color-teal {
-            background: #22c2a0;
-
-            &:hover {
-                background: #1ab292;
-            }
-
-            &:active {
-                background: #0da182;
-            }
-        }
-
-        &.color-yellow {
-            background: #CABA66;
-
-            &:hover {
-                background: #A79B54;
-            }
-
-            &:active {
-                background: #867D44;
-            }
-        }
-
         .option-title {
             font-size: 20px;
             color: #fff;
@@ -493,7 +416,7 @@ h5 {
             position: absolute;
             top: 0;
             left: 0;
-            background: #1b4164;
+            background: #1D4164;
             border-radius: 2px;
             transition: all .3s;
         }
